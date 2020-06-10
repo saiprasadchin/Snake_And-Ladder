@@ -9,25 +9,33 @@ zero=0
 ladder=2
 snake=3
 noPlay=1
+winning=100
 
-check=$((RANDOM % 3 + 1))
-echo "check : $check"
-if [ $check -eq $noPlay ]
-then
-        echo "No play"
-elif [ $check -eq $snake ]
-then
-        dice
-        position=$(( $position - $rollDice ))
-	if [ $position -lt $zero ]
+while [[ $position -ne $winning ]]
+do
+        let numberOfDice++
+	check=$((RANDOM % 3 + 1))
+	if [ $check -eq $noPlay ]
+	then
+        	continue
+	elif [ $check -eq $snake ]
+	then
+        	dice
+        	position=$(( $position - $rollDice ))
+		if [ $position -lt $zero ]
+        	then
+	        	position=$zero
+        	fi
+       	elif [ $check -eq $ladder ]
+	then
+        	dice
+        	position=$(( $position + $rollDice ))
+	fi
+	if [ $position -gt $winning ]
         then
-	        position=$zero
+                position=$(( $position - $rollDice ))
         fi
-        echo "Snack = player at position : $position"
-elif [ $check -eq $ladder ]
-then
-        dice
-        position=$(( $position + $rollDice ))
-        echo "Ladder = player at position : $position"
-fi
+done
+echo "player at position $position"
+echo "Total number of times Dice roll : $numberOfDice"
 

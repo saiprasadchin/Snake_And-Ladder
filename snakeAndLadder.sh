@@ -5,7 +5,7 @@ function dice(){
 	rollDice=$((RANDOM % 6 + 1))
 
 }
-
+zero=0
 ladder=2
 snake=3
 noPlay=1
@@ -19,6 +19,10 @@ elif [ $check -eq $snake ]
 then
         dice
         position=$(( $position - $rollDice ))
+	if [ $position -lt $zero ]
+        then
+	        position=$zero
+        fi
         echo "Snack = player at position : $position"
 elif [ $check -eq $ladder ]
 then

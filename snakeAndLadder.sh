@@ -7,7 +7,7 @@ function dice(){
 }
 
 declare -a playerOne
-
+declare -a playerTwo
 function gameBoard(){
         local zero=0
         local ladder=3
@@ -32,7 +32,7 @@ function gameBoard(){
                 position=$(( $position + $rollDice ))
         fi
 
-        if [ $position -gt $winning ]
+        if [[ $position -gt $winning ]]
         then
                 position=$(($position-$rollDice))
         fi
@@ -42,21 +42,29 @@ function gameBoard(){
 
 winning=100
 positionOne=0
-
-while [[ $positionOne -ne $winning ]]
+positionTwo=0
+while [[ $positionOne -ne $winning && $positionTwo -ne $winning ]]
 do
         let numberOfDice++
         gameBoard $positionOne
         positionOne=$?
         playerOne[$numberOfDice]=$positionOne
 
+        gameBoard $positionTwo
+        positionTwo=$?
+        playerTwo[$numberOfDice]=$positionTwo
+
+
 done
 
-for (( i=1; i<=$numberOfDice; i++))
-do
-        echo "dice roll : $i--> Position at:${playerOne[$i]}"
-done
-
-echo "player at position $position"
+echo "player1 at position : $positionOne"
+echo "player2 at position : $positionTwo"
 echo "Total number of times Dice roll : $numberOfDice"
-
+echo "WINNER"
+echo "======"
+if [ $positionOne -gt $positionTwo ]
+then
+        echo "Player1 Won the game"
+else
+        echo "Player2 Won the game"
+fi

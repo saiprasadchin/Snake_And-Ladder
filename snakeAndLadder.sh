@@ -60,7 +60,8 @@ done
 echo "player1 at position : $positionOne"
 echo "player2 at position : $positionTwo"
 echo "Total number of times Dice roll : $numberOfDice"
-echo "---------WINNER--------"
+echo "-------WINNER-------"
+
 
 if [ $positionOne -gt $positionTwo ]
 then
